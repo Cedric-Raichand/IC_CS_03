@@ -1,29 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Phishing Detector</title>
+    <title>Phishing Detection System</title>
 </head>
 <body>
 
-<h2>🔎 Phishing URL Detector</h2>
+<h1>Phishing Detection System</h1>
 
 <form method="POST">
-    <input type="text" name="url" placeholder="Enter website URL" required>
+    <input type="text" name="url" placeholder="Enter URL here" required size="50">
     <button type="submit">Check</button>
 </form>
 
 {% if result %}
-<hr>
-<h3>Result for: {{ result.url }}</h3>
-<h2>Status: {{ result.verdict }}</h2>
-<p>Risk Score: {{ result.score }}</p>
+    <h2>Rule-Based Result</h2>
+    <p><strong>Status:</strong> {{ result }}</p>
+    <p><strong>Risk Score:</strong> {{ risk_score }}</p>
 
-<h4>Reasons:</h4>
-<ul>
-    {% for r in result.reasons %}
-    <li>{{ r }}</li>
-    {% endfor %}
-</ul>
+    <h3>Reasons:</h3>
+    <ul>
+        {% for reason in reasons %}
+            <li>{{ reason }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if ml_result %}
+    <h2>ML Model Prediction</h2>
+    <p><strong>{{ ml_result }}</strong></p>
 {% endif %}
 
 </body>
