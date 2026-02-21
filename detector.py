@@ -1,45 +1,35 @@
-from url_features import extract_features
-
-def rule_based_detection(url):
-    features = extract_features(url)
-
-    score = 0
+def rule_based_check(url):
+    risk_score = 0
     reasons = []
 
-    if features["ip_address"]:
-        score += 2
-        reasons.append("Uses IP address instead of domain")
+    if len(url) > 75:
+        risk_score += 1
+        reasons.append("Long URL")
 
-    if features["at_symbol"]:
-        score += 2
+    if "@" in url:
+        risk_score += 1
         reasons.append("Contains @ symbol")
 
-    if features["long_url"]:
-        score += 1
-        reasons.append("URL is unusually long")
-
-    if features["many_subdomains"]:
-        score += 2
-        reasons.append("Too many subdomains")
-
-    if features["hyphen_domain"]:
-        score += 1
+    if "-" in url:
+        risk_score += 1
         reasons.append("Hyphenated domain")
 
-    if features["suspicious_words"]:
-        score += 2
+    if url.count(".") > 3:
+        risk_score += 1
+        reasons.append("Multiple subdomains")
+
+    keywords = ["login", "verify", "update", "secure", "account"]
+    if any(k in url.lower() for k in keywords):
+        risk_score += 1
         reasons.append("Contains phishing keywords")
 
-    if not features["https"]:
-        score += 2
+    if not url.startswith("https"):
+        risk_score += 1
         reasons.append("No HTTPS encryption")
 
-    # decision thresholds
-    if score >= 6:
-        verdict = "PHISHING"
-    elif score >= 3:
-        verdict = "SUSPICIOUS"
+    if risk_score >= 3:
+        status = "SUSPICIOUS"
     else:
-        verdict = "SAFE"
+        status = "LIKELY SAFE"
 
-    return verdict, score, reasons
+    return status, risk_score, reasons
