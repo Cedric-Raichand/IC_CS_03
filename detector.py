@@ -33,3 +33,8 @@ def rule_based_check(url):
         status = "LIKELY SAFE"
 
     return status, risk_score, reasons
+
+
+# This is what app.py imports
+def check_url(url):
+    return rule_based_check(url)
