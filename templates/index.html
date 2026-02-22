@@ -1,34 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Phishing Detection System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            text-align: center;
+            padding: 40px;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        input {
+            padding: 10px;
+            width: 70%;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .risk {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .high { color: red; }
+        .medium { color: orange; }
+        .low { color: #b8860b; }
+        .safe { color: green; }
+        footer {
+            margin-top: 40px;
+            font-size: 14px;
+            color: gray;
+        }
+    </style>
 </head>
 <body>
 
-<h1>Phishing Detection System</h1>
+<div class="container">
+    <h1>Hybrid AI Phishing Detection System</h1>
 
-<form method="POST">
-    <input type="text" name="url" placeholder="Enter URL here" required size="50">
-    <button type="submit">Check</button>
-</form>
+    <form method="POST">
+        <input type="text" name="url" placeholder="Enter URL here..." required>
+        <button type="submit">Scan</button>
+    </form>
 
-{% if result %}
-    <h2>Rule-Based Result</h2>
-    <p><strong>Status:</strong> {{ result }}</p>
-    <p><strong>Risk Score:</strong> {{ risk_score }}</p>
+    {% if final_result %}
+        <div class="risk
+            {% if final_result == 'HIGH RISK' %}high
+            {% elif final_result == 'MEDIUM RISK' %}medium
+            {% elif final_result == 'LOW RISK' %}low
+            {% else %}safe{% endif %}">
+            Final Risk: {{ final_result }}
+        </div>
 
-    <h3>Reasons:</h3>
-    <ul>
-        {% for reason in reasons %}
-            <li>{{ reason }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+        <p><strong>ML Confidence:</strong> {{ confidence }}%</p>
 
-{% if ml_result %}
-    <h2>ML Model Prediction</h2>
-    <p><strong>{{ ml_result }}</strong></p>
-{% endif %}
+        <hr>
+
+        <h3>Rule-Based Result</h3>
+        <p>Status: {{ rule_status }}</p>
+        <p>Risk Score: {{ risk_score }}</p>
+
+        <h4>Reasons:</h4>
+        <ul style="text-align:left; display:inline-block;">
+            {% for reason in reasons %}
+                <li>{{ reason }}</li>
+            {% endfor %}
+        </ul>
+
+        <hr>
+
+        <h3>ML Model Prediction</h3>
+        <p>{{ ml_result }}</p>
+    {% endif %}
+</div>
+
+<footer>
+    Built by Cedrick Dzodzodzi | InternCred Cybersecurity Internship
+</footer>
 
 </body>
 </html>
