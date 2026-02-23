@@ -21,14 +21,11 @@ def index():
     if request.method == "POST":
         url = request.form["url"]
 
-        # Rule-based detection
         rule_status, risk_score, reasons = check_url(url)
 
-        # Feature extraction
         features = extract_features(url)
         features = np.array(features).reshape(1, -1)
 
-        # ML prediction
         ml_prediction = model.predict(features)[0]
         probabilities = model.predict_proba(features)[0]
 
