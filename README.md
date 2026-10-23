@@ -32,7 +32,10 @@ This project implements a **Phishing Detection System** that helps users identif
 - **Programming Language:** Python  
 - **Framework:** Flask  
 - **Libraries:** scikit-learn, pandas, numpy, joblib, requests  
-- **Dataset:** Phishing URL features from UCI ML repository / PhishTank API  
+- **Dataset:** Phishing URL features from UCI ML repository / PhishTank API
+
+## Author
+Cedric-Raichand
 
 License 
 This is purely Educational project 
